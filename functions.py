@@ -22,14 +22,10 @@ def check_log(df):
     gridtable = AgGrid(
         df,
         gridOptions=gridOptions,
-        data_return_mode='AS_INPUT',
-        update_on='cellValueChanged',
         fit_columns_on_grid_load=False,
         theme='balham', #theme color for the table
-        enable_enterprise_modules=True,
         height=350,
         width='100%',
-        reload_data=True,
            )
 
     grid = gridtable['data']
