@@ -34,6 +34,7 @@ with c1:
     pass
 with c2:
     st.image("assets/img/logo.png",width=300)
+    st.title("Log Analyzer")   
 with c3:
     pass
 
@@ -57,67 +58,16 @@ st.divider()
 
 
 if log_type == "Web":
-    st.info("Upload a csv or txt file 👇")
-    with st.expander("Check a sample of the kind of csv file you should upload"):
-    # st.write("Here's a sample of the csv file you should upload")
-        st.download_button("Download sample",data=cfg.web_csv_content,file_name="sample.csv",mime="text/csv")
-
-        fu,sep = st.columns([0.9,0.1])
-
-        uploaded_file = fu.file_uploader("Choose a local file", type=["csv" , "txt"])
-        sep = sep.selectbox(
-            "Separator",
-            options=[",",";"], 
-        )
-        if uploaded_file is not None:
-            dataframe = pd.read_csv(uploaded_file,delimiter=sep, quotechar='"', skipinitialspace=True)
-            st.write(dataframe)
-            n , hea = st.columns([0.05,0.95])
-            n = n.warning("2")
-
-            hea = hea.header("Check")
-            st.info("Check information of the log file")
-            new_df = fn.check_log(dataframe)
-
-            n , hea = st.columns([0.05,0.95])
-            n = n.warning("3")
-
-            hea = hea.header("Export")
-            st.info("Export the information to csv file")
-            if st.button("Export"): 
-                st.write(new_df)
-                data_as_csv= new_df.to_csv(index=False).encode("utf-8")
-                st.download_button("Download the export",data=data_as_csv,file_name="export.csv",mime="text/csv")
+    data = cfg.web_csv_content
+    fn.log_analyzer(data,log_type)
+elif log_type == "Network":
+    data = cfg.netw_csv_content
+    fn.log_analyzer(data,log_type)
+elif log_type == "System":
+    data = cfg.sys_csv_content
+    fn.log_analyzer(data,log_type)  
             
-
-
     st.divider()   
-
-# with st.expander("Enter a card number, a month and a year and the number of results you want to extrapolate"):
-
-#     number , result , month , year = st.columns([1,1,1,1])
-#     number = number.text_input("Enter a card number",help="Enter a card number")
-#     month = month.selectbox(
-#             "Month",
-#             options=range(1, 13), 
-#             help="Month"
-#         )
-#     year = year.selectbox(
-#             "Year",
-#             options=range(23, 63), 
-#             help="Year"
-#         )
-#     result = result.selectbox(label="number of results",options = [5,10,15,20],help="number of results")
-
-
-#     if st.button("Extrapolate"):
-#         # convert list to dataframe
-#         dataframe = pd.DataFrame(data=fn.dk_extrapolator(number, result), columns=["numero"])
-
-#         # adding month and year
-#         dataframe["mois"] = month
-#         dataframe["annee"] = year
-#         st.table(dataframe)
 
 
 
