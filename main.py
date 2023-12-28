@@ -62,39 +62,48 @@ if log_type == "Web":
     # st.write("Here's a sample of the csv file you should upload")
         st.download_button("Download sample",data=cfg.csv_content,file_name="sample.csv",mime="text/csv")
 
-        uploaded_file = st.file_uploader("Choose a local file", type=["csv" , "txt"])
+        fu,sep = st.columns([0.9,0.1])
+
+        uploaded_file = fu.file_uploader("Choose a local file", type=["csv" , "txt"])
+        sep = sep.selectbox(
+            "Separator",
+            options=[",",";"], 
+        )
         if uploaded_file is not None:
-            dataframe = pd.read_csv(uploaded_file)
-            # st.dataframe(
-            #     dataframe,
-            # #     column_config={
-            # #         "Adresse IP": "Adresse IP",
-            # #         "Vide":"Vide",
-            # #         "Qui":"Qui",
-            # #         "Quand":"Quand",
-            # #         "Quoi":"Quoi",
-            # #         "Ok":"Ok",
-            # #         "Combien ?":"Combien ?",
-            # #         "D’où ?":"D’où ?",
-            # #         "Comment ?":"Comment ?"
-            # # },
-            # use_container_width=True
-            # ,)
-            n , hea = st.columns([0.05,0.95])
-            n = n.warning("2")
+            if sep == ",":
+                dataframe = pd.read_csv(uploaded_file,delimiter=",", quotechar='"', skipinitialspace=True)
+                st.write(dataframe)
+                n , hea = st.columns([0.05,0.95])
+                n = n.warning("2")
 
-            hea = hea.header("Check")
-            st.info("Check information of the log file")
-            new_df = fn.check_log(dataframe)
+                hea = hea.header("Check")
+                st.info("Check information of the log file")
+                new_df = fn.check_log(dataframe)
 
-            n , hea = st.columns([0.05,0.95])
-            n = n.warning("3")
+                n , hea = st.columns([0.05,0.95])
+                n = n.warning("3")
 
-            hea = hea.header("Export")
-            st.info("Export the information to csv file")
-            if st.button("Export"): 
-                data_as_csv= new_df.to_csv(index=False).encode("utf-8")
-                st.download_button("Download the export",data=data_as_csv,file_name="export.csv",mime="text/csv")
+                hea = hea.header("Export")
+                st.info("Export the information to csv file")
+                if st.button("Export"): 
+                    data_as_csv= new_df.to_csv(index=False).encode("utf-8")
+            if sep == ";":
+                dataframe = pd.read_csv(uploaded_file,sep=";", quotechar='"', skipinitialspace=True)
+                n , hea = st.columns([0.05,0.95])
+                n = n.warning("2")
+
+                hea = hea.header("Check")
+                st.info("Check information of the log file")
+                new_df = fn.check_log(dataframe)
+
+                n , hea = st.columns([0.05,0.95])
+                n = n.warning("3")
+
+                hea = hea.header("Export")
+                st.info("Export the information to csv file")
+                if st.button("Export"): 
+                    data_as_csv= new_df.to_csv(index=False).encode("utf-8")
+                    st.download_button("Download the export",data=data_as_csv,file_name="export.csv",mime="text/csv")
 
 
 

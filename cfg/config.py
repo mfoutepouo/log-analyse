@@ -1,5 +1,3 @@
 
-csv_content = """
-Adresse IP, Vide, Qui, Quand, Quoi, Ok, Combien, D’où, Comment
-183.121.143.32, -, -, [18/Mar/2003:08:04:22 +0200], GET /images/logo.jpg HTTP/1.1, 200, 512, http://www.wikipedia.org/, Mozilla/5.0 (X11; U; Linux i686; de-DE;rv:1.7.5)
-"""
+csv_content = '''Date/Time,User-Agent,URL,Status,Bytes Sent
+2023-12-21 12:30:15,Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36,/page1.html,200,3589'''
